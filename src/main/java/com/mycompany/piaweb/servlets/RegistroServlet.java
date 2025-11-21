@@ -105,6 +105,7 @@ public class RegistroServlet extends HttpServlet {
         String TelefonoUsuario = request.getParameter("telefonoR");
         String email = request.getParameter("correoR");
         String Pass = request.getParameter("contrasenaR");
+        String passwordConfirm = request.getParameter("confirmarContrasenaR");
         LocalDate fechaCreacion = LocalDate.now();
         Date fechaC = Date.from(fechaCreacion.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
@@ -159,6 +160,27 @@ public class RegistroServlet extends HttpServlet {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
                 return;
             }
+        }
+
+        String regexPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!._-]).{8,}$";
+        if (Pass != null) {
+            if (!Pass.matches(regexPassword)) {
+                System.out.println("Error: La contraseña no cumple los requisitos de seguridad.");
+                request.setAttribute("MensajeRegistro", "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
+            }
+        } else {
+            request.setAttribute("MensajeRegistro", "La contraseña es obligatoria.");
+            request.getRequestDispatcher("register.jsp").forward(request, response);
+            return;
+        }
+        
+        if (!Pass.equals(passwordConfirm)) {
+                System.out.println("Error: La contraseña no cumple los requisitos de seguridad.");
+                request.setAttribute("MensajeRegistro", "La contraseñas contraseñas no coinciden.");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+                return;
         }
 
         System.out.println(nombreUsuario);

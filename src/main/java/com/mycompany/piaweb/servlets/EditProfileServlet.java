@@ -73,6 +73,21 @@ public class EditProfileServlet extends HttpServlet {
                 return;
             }
         }
+        
+        String regexPassword = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!._-]).{8,}$";
+        if (passwordUpdated != null) {
+            if (!passwordUpdated.matches(regexPassword)) {
+                System.out.println("Error: La contraseña no cumple los requisitos de seguridad.");
+                session.setAttribute("mensajeFlash", "Las contraseñas no coinciden. Inténtalo de nuevo.");
+                session.setAttribute("tipoMensaje", "danger"); 
+                response.sendRedirect("GetMyProfileServlet");
+                return;
+            }
+        } else {
+            request.setAttribute("MensajeRegistro", "La contraseña es obligatoria.");
+            request.getRequestDispatcher("register.jsp").forward(request, response);
+            return;
+        }
 
         if (!passwordUpdated.equals(passwordConfirm)) {
             session.setAttribute("mensajeFlash", "Las contraseñas no coinciden. Inténtalo de nuevo.");
