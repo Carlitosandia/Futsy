@@ -1,0 +1,163 @@
+/***** === BASE === *****/
+:root {
+  --headerh: 64px;
+  --nav-w: 64px;
+  --bg-page: #ffffff;
+  --bg-section: #e5e5e5;
+  --text: #222;
+  --text-muted: #6a6a6a;
+  --brand: #102c54;
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, .06);
+  --gutter: 40px;
+  --danger: #ef4444; 
+  --success: #16a34a;
+}
+
+/***** === Reset === *****/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg-page);
+  color: var(--text);
+}
+
+/***** === HEADER === *****/
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--headerh);
+  background: var(--brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 1000;
+}
+
+.logo img {
+  width: 100px;
+  height: auto;
+  margin-left: 60px;
+}
+
+.usuario img {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.search-bar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar input {
+  width: 260px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+.search-bar button {
+  margin-left: 6px;
+  border: none;
+  padding: 5px 10px;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.user-actions {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-actions button {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/***** === NAVBAR === *****/
+.side-navbar {
+  position: fixed;
+  top: var(--headerh);
+  left: 0;
+  width: var(--nav-w);
+  height: calc(100vh - var(--headerh));
+  background: var(--brand);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 900;
+}
+
+.side-navbar ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.side-navbar a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 22px;
+}
+
+/***** === MAIN PAGE === *****/
+.page {
+  padding-top: var(--headerh);
+  padding-left: var(--nav-w);
+  min-height: 100vh;
+  background: var(--bg-page);
+}
+
+
+.alert-error-bar {
+    width: 100%;
+    padding: 15px 30px;
+    margin: 0; 
+    box-sizing: border-box;
+    background-color: var(--danger); 
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.alert-messsage-bar {
+    width: 100%;
+    padding: 15px 30px;
+    margin: 0; 
+    box-sizing: border-box;
+    background-color: var(--success); 
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
