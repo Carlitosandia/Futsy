@@ -17,13 +17,12 @@ import java.util.List;
 
 /**
  *
- * @author Carlo
+ 
  */
 @WebServlet("/CrearEquipoMundialServlet")
 public class CrearEquipoMundialServlet extends HttpServlet {
 
-    // IMPORTANTE: Redirigimos al Servlet principal para ver la vista.
-    // No duplicamos la lógica de cargar jugadores/países aquí.
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -39,19 +38,17 @@ public class CrearEquipoMundialServlet extends HttpServlet {
         }
         Users usuarioSesion = (Users) session.getAttribute("usuarioSesion");
 
-        // 1. PARAMETROS BÁSICOS
-        String teamName = request.getParameter("nombreEquipo");
-        // No usamos tipoEquipo aquí porque ya sabemos que es Mundial
         
-        // 2. DETECTAR SI ES EDICIÓN
-        String teamIdParam = request.getParameter("teamId"); // Input hidden en el JSP
+        String teamName = request.getParameter("nombreEquipo");
+       
+        String teamIdParam = request.getParameter("teamId"); 
         boolean isEdit = (teamIdParam != null && !teamIdParam.isEmpty());
 
         String playerListRaw = request.getParameter("jugadoresSeleccionados");
         String countryIdRaw = request.getParameter("paisSeleccionado");
         int countryId = 0;
 
-        // 3. VALIDAR PAÍS
+        
         if (countryIdRaw != null && !countryIdRaw.equals("TODOS") && !countryIdRaw.isEmpty()) {
             try {
                 countryId = Integer.parseInt(countryIdRaw);
@@ -60,7 +57,7 @@ public class CrearEquipoMundialServlet extends HttpServlet {
             }
         }
 
-        // 4. PROCESAR JUGADORES
+        
         List<Integer> playerIds = new ArrayList<>();
         if (playerListRaw != null && !playerListRaw.isEmpty()) {
             String[] parts = playerListRaw.split(",");
@@ -78,20 +75,16 @@ public class CrearEquipoMundialServlet extends HttpServlet {
             return;
         }
 
-        // 5. LÓGICA DE LOGO (Bandera basada en el ID del país)
-        // En Mundial, el logo suele cambiar si cambias de país, incluso en edición.
+        
         String logoPathForDB;
         if (countryId == 0) {
             logoPathForDB = "public/assets/EquipoSinLogo.png";
         } else {
-            // Asumiendo que el value del select es el ID del país
-            // Si usas el nombre en la ruta, asegúrate de obtener el nombre, 
-            // pero tu código anterior usaba el ID o el nombre del parámetro raw.
-            // Para consistencia con tu código anterior:
+            
             logoPathForDB = "public/assets/banderas/" + countryIdRaw + ".png";
         }
 
-        // 6. CREAR OBJETO
+        
         TeamsMundial newTeam = new TeamsMundial();
         if (isEdit) {
             newTeam.setId(Integer.parseInt(teamIdParam));
@@ -106,7 +99,7 @@ public class CrearEquipoMundialServlet extends HttpServlet {
             TeamsMundialDAO teamMundialDAO = new TeamsMundialDAO(connection);
             boolean exito;
 
-            // 7. INSERT O UPDATE
+            
             if (isEdit) {
                 exito = teamMundialDAO.updateTeamMundial(newTeam, playerIds);
             } else {

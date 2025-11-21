@@ -38,9 +38,9 @@ import java.util.List;
  */
 @WebServlet(name = "PostServlet", urlPatterns = {"/PostServlet"})
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
-        maxFileSize = 1024 * 1024 * 10, // 10 MB
-        maxRequestSize = 1024 * 1024 * 15 // 15 MB
+        fileSizeThreshold = 1024 * 1024 * 1, 
+        maxFileSize = 1024 * 1024 * 10, 
+        maxRequestSize = 1024 * 1024 * 15 
 )
 public class PostServlet extends HttpServlet {
 
@@ -113,7 +113,7 @@ public class PostServlet extends HttpServlet {
 
             PostsDAO postsDAO = new PostsDAO(conn);
 
-            // Crear post
+           
             Post post = new Post();
             post.setAuthorUserId(usuarioSesion.getIdUsers());
             post.setTitle(title != null ? title : "");
@@ -134,7 +134,6 @@ public class PostServlet extends HttpServlet {
                 System.out.println("El post no tiene tags seleccionados.");
             }
 
-            // Guardar imagen si existe
             if (fileName != null) {
                 System.out.println("Guardando imagen en uploads/" + fileName);
 
@@ -146,7 +145,7 @@ public class PostServlet extends HttpServlet {
                     uploadDir.mkdir();
                 }
 
-                // Guardar físicamente el archivo
+                
                 filePart.write(uploadPath + File.separator + fileName);
 
                 PostImage img = new PostImage();
@@ -158,13 +157,13 @@ public class PostServlet extends HttpServlet {
                 System.out.println("Imagen insertada correctamente en la DB");
             }
 
-            // Respuesta simple estilo RegistroServlet
+            
             request.setAttribute("MensajePost", "Publicación creada correctamente");
             response.sendRedirect("GetPostsServlet");
 
         } catch (Exception e) {
             System.out.println("️ Error al crear la publicación");
-            e.printStackTrace(); // imprime la traza completa
+            e.printStackTrace(); 
             request.getRequestDispatcher("parati.jsp").forward(request, response);
         }
     }

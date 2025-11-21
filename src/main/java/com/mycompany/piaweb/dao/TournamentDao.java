@@ -18,7 +18,6 @@ import java.util.List;
 
 /**
  *
- * @author Carlo
  */
 public class TournamentDao {
 
@@ -36,9 +35,7 @@ public class TournamentDao {
         }
     }
 
-    // ============================================================
-    // 1. Crear torneo
-    // ============================================================
+    
     public Long createTournament(Tournament tournament) {
         String sql = "INSERT INTO tournaments "
                 + "(name, mode, created_by_user_id, is_simulation_allowed) "
@@ -86,10 +83,7 @@ public class TournamentDao {
         }
     }
 
-    // ============================================================
-    // 2. Insertar participantes (torneo individual general)
-    //    Aquí: sólo el equipo del usuario + (opcional) otros equipos
-    // ============================================================
+   
     public List<TournamentParticipant> insertParticipantsForGeneral(Long tournamentId, Long ownerUserId) {
         List<TournamentParticipant> list = new ArrayList<>();
 
@@ -155,10 +149,7 @@ public class TournamentDao {
         return list;
     }
 
-    // ============================================================
-    // 3. Insertar participantes para torneo general global
-    //    (elige N equipos al azar)
-    // ============================================================
+    
     public List<TournamentParticipant> insertParticipantsForGlobalGeneral(Long tournamentId, int limit) {
         List<TournamentParticipant> list = new ArrayList<>();
 
@@ -182,7 +173,7 @@ public class TournamentDao {
             List<String> teamNames = new ArrayList<>();
             List<String> teamLogos = new ArrayList<>();
 
-            // 1) seleccionar equipos
+            
             try (PreparedStatement ps = conn.prepareStatement(sqlSelectTeams)) {
                 ps.setInt(1, limit);
                 try (ResultSet rs = ps.executeQuery()) {
@@ -194,7 +185,7 @@ public class TournamentDao {
                 }
             }
 
-            // 2) insertarlos como participantes
+            
             try (PreparedStatement ps = conn.prepareStatement(sqlInsertParticipant, Statement.RETURN_GENERATED_KEYS)) {
 
                 for (int i = 0; i < teamIds.size(); i++) {
@@ -228,10 +219,7 @@ public class TournamentDao {
         return list;
     }
 
-    // ============================================================
-    // 4. Insertar participantes para torneo tipo mundial
-    //    (elige N selecciones al azar)
-    // ============================================================
+    
     public List<TournamentParticipant> insertParticipantsForWorldCup(Long tournamentId, int limit) {
         List<TournamentParticipant> list = new ArrayList<>();
 
@@ -254,7 +242,7 @@ public class TournamentDao {
             List<String> ntNames = new ArrayList<>();
             List<String> ntLogos = new ArrayList<>();
 
-            // 1) seleccionar selecciones
+            
             try (PreparedStatement ps = conn.prepareStatement(sqlSelectNt)) {
                 ps.setInt(1, limit);
                 try (ResultSet rs = ps.executeQuery()) {
@@ -266,7 +254,7 @@ public class TournamentDao {
                 }
             }
 
-            // 2) insertarlas como participantes
+            
             try (PreparedStatement ps = conn.prepareStatement(sqlInsertParticipant, Statement.RETURN_GENERATED_KEYS)) {
 
                 for (int i = 0; i < ntIds.size(); i++) {
@@ -300,9 +288,7 @@ public class TournamentDao {
         return list;
     }
 
-    // ============================================================
-    // 5. Calcular overall de un equipo
-    // ============================================================
+    
     public int calculateOverallForTeam(Long teamId) {
         String sql
                 = "SELECT AVG(p.overall) AS rating "
@@ -325,9 +311,7 @@ public class TournamentDao {
         return 0;
     }
 
-    // ============================================================
-    // 6. Calcular overall de una selección
-    // ============================================================
+   
     public int calculateOverallForNationalTeam(Long nationalTeamId) {
         String sql
                 = "SELECT AVG(p.overall) AS rating "
@@ -350,9 +334,7 @@ public class TournamentDao {
         return 0;
     }
 
-    // ============================================================
-    // 7. Insertar partidos
-    // ============================================================
+   
     public void insertMatches(List<Match> matches) {
         String sql
                 = "INSERT INTO matches "
@@ -412,9 +394,7 @@ public class TournamentDao {
         }
     }
 
-    // ============================================================
-    // 8. Actualizar campeón
-    // ============================================================
+    
     public void updateChampion(Long tournamentId, Long winnerParticipantId) {
         String sql = "UPDATE tournaments "
                 + "SET winner_participant_id = ? "
@@ -431,10 +411,6 @@ public class TournamentDao {
         }
     }
 
-    // ============================================================
-    // 9. Obtener partidos de un torneo
-    //    (para pintar el bracket en JSP)
-    // ============================================================
     public List<Match> findMatchesByTournament(Long tournamentId) {
         List<Match> list = new ArrayList<>();
 
@@ -556,7 +532,7 @@ public class TournamentDao {
         return null;
     }
 
-    // Último torneo mundial creado por el sistema (created_by_user_id IS NULL)
+    
     public Long findLatestSystemWorldCupTournamentId() {
         String sql = "SELECT id "
                 + "FROM tournaments "
@@ -577,7 +553,6 @@ public class TournamentDao {
         return null;
     }
 
-// Último torneo mundial (sin importar si es sistema o usuario)
     public Long findLatestWorldCupTournamentId() {
         String sql = "SELECT id "
                 + "FROM tournaments "
@@ -650,7 +625,7 @@ public class TournamentDao {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
 
-                    // ----- home -----
+                   
                     TournamentParticipant home = new TournamentParticipant();
                     home.setId(rs.getLong("home_participant_id"));
                     String hKind = rs.getString("h_kind");
@@ -668,7 +643,7 @@ public class TournamentDao {
                         home.setLogo(rs.getString("h_team_logo"));
                     }
 
-                    // ----- away -----
+                    
                     TournamentParticipant away = new TournamentParticipant();
                     away.setId(rs.getLong("away_participant_id"));
                     String aKind = rs.getString("a_kind");
@@ -686,7 +661,7 @@ public class TournamentDao {
                         away.setLogo(rs.getString("a_team_logo"));
                     }
 
-                    // ----- match -----
+                   
                     Match m = new Match();
                     m.setId(rs.getLong("id"));
                     m.setTournamentId(rs.getLong("tournament_id"));
@@ -701,7 +676,7 @@ public class TournamentDao {
                     m.setAwayScore(rs.getInt("away_score"));
                     m.setSimulated(rs.getBoolean("is_simulated"));
 
-                    // si tu modelo Match tiene campo playedAt:
+                    
                     java.sql.Timestamp ts = rs.getTimestamp("played_at");
                     if (ts != null) {
                         m.setPlayed_at(new java.sql.Date(ts.getTime()));
@@ -732,21 +707,21 @@ public class TournamentDao {
 
         String sql = "SELECT m.*, "
                    + "       t.mode, "
-                   // Datos del equipo Local del partido
+                   
                    + "       hp.kind AS h_kind, hp.team_id AS h_team_id, hp.national_team_id AS h_nt_id, "
                    + "       t_home.name AS h_team_name, t_home.logo AS h_team_logo, "
                    + "       nt_home.display_name AS h_nt_name, nt_home.logo AS h_nt_logo, "
-                   // Datos del equipo Visitante del partido
+                   
                    + "       ap.kind AS a_kind, ap.team_id AS a_team_id, ap.national_team_id AS a_nt_id, "
                    + "       t_away.name AS a_team_name, t_away.logo AS a_team_logo, "
                    + "       nt_away.display_name AS a_nt_name, nt_away.logo AS a_nt_logo "
                    + "FROM matches m "
                    + "JOIN tournaments t ON t.id = m.tournament_id "
-                   // JOINS para saber quién es el CAMPEÓN DEL TORNEO
+                   
                    + "JOIN tournament_participants wp ON t.winner_participant_id = wp.id "
                    + "LEFT JOIN teams w_team ON wp.team_id = w_team.id "
                    + "LEFT JOIN national_teams w_nt ON wp.national_team_id = w_nt.id "
-                   // JOINS estándar para armar la info del partido (Match)
+                  
                    + "JOIN tournament_participants hp ON m.home_participant_id = hp.id "
                    + "JOIN tournament_participants ap ON m.away_participant_id = ap.id "
                    + "LEFT JOIN teams t_home ON hp.team_id = t_home.id "
@@ -754,8 +729,8 @@ public class TournamentDao {
                    + "LEFT JOIN teams t_away ON ap.team_id = t_away.id "
                    + "LEFT JOIN national_teams nt_away ON ap.national_team_id = nt_away.id "
                    + "WHERE "
-                   + "      m.phase = 'final' " // Solo queremos ver la final
-                   + "  AND ( " // Verificamos que el dueño del CAMPEÓN sea el usuario
+                   + "      m.phase = 'final' " 
+                   + "  AND ( " 
                    + "        w_team.owner_user_id = ? OR "
                    + "        w_nt.owner_user_id = ? "
                    + "      ) "
@@ -768,9 +743,9 @@ public class TournamentDao {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    // --- Mapeo idéntico al anterior ---
                     
-                    // 1. Home Participant
+                    
+                   
                     TournamentParticipant home = new TournamentParticipant();
                     home.setId(rs.getLong("home_participant_id"));
                     String hKind = rs.getString("h_kind");
@@ -786,7 +761,7 @@ public class TournamentDao {
                         home.setLogo(rs.getString("h_team_logo"));
                     }
 
-                    // 2. Away Participant
+                    
                     TournamentParticipant away = new TournamentParticipant();
                     away.setId(rs.getLong("away_participant_id"));
                     String aKind = rs.getString("a_kind");
@@ -802,13 +777,13 @@ public class TournamentDao {
                         away.setLogo(rs.getString("a_team_logo"));
                     }
 
-                    // 3. Match Object
+                    
                     Match m = new Match();
                     m.setId(rs.getLong("id"));
                     m.setTournamentId(rs.getLong("tournament_id"));
                     m.setHome(home);
                     m.setAway(away);
-                    m.setPhase(fromDbPhase(rs.getString("phase"))); // Asegúrate de tener este método helper accesible o copiado
+                    m.setPhase(fromDbPhase(rs.getString("phase"))); 
                     m.setRoundNumber(rs.getInt("round_number"));
                     m.setHomeScore(rs.getInt("home_score"));
                     m.setAwayScore(rs.getInt("away_score"));
@@ -818,7 +793,7 @@ public class TournamentDao {
                         m.setPlayed_at(new java.sql.Date(ts.getTime()));
                     } 
 
-                    // Set Winner en el objeto Match
+                    
                     long matchWinnerId = rs.getLong("winner_participant_id");
                     if (!rs.wasNull()) {
                         if (matchWinnerId == home.getId()) m.setWinner(home);
@@ -835,7 +810,7 @@ public class TournamentDao {
     }
 
     public List<Match> findUserGeneralMatches(Long userId) {
-        // aquí decides qué consideras “general”: SIMULATED, LEAGUE, etc.
+        
         return findUserMatchesByMode(userId, TournamentMode.GENERAL);
     }
 
@@ -849,7 +824,7 @@ public class TournamentDao {
         List<Match> allMatches = findUserGeneralMatches(userId);
 
         for (Match m : allMatches) {
-            // Compara las fechas de los partidos con la fecha seleccionada
+            
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String matchDate = sdf.format(m.getPlayed_at());
             if (matchDate.equals(date)) {

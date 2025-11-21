@@ -15,12 +15,12 @@ public class Post {
     private int authorUserId;
     private String authorName;
     private String authorUsername;
-    private String authorImage; // URL de perfil
+    private String authorImage; 
     private String description;
     private String title;
     private String featuredLeague;
     private String featuredWorldcup;
-    private PostImage image; // Imagen opcional del post
+    private PostImage image; 
     private List<Tags> tags;
 
     

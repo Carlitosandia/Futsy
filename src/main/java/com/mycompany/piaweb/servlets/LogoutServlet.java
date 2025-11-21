@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpSession; // Importante importar esto
 
 /**
  *
- * @author Carlo
  */
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
 public class LogoutServlet extends HttpServlet {

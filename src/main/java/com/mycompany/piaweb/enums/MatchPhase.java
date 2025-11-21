@@ -6,7 +6,6 @@ package com.mycompany.piaweb.enums;
 
 /**
  *
- * @author Carlo
  */
 public enum MatchPhase {
     GROUP,

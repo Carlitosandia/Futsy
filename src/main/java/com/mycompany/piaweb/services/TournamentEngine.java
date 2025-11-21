@@ -8,7 +8,7 @@ import com.mycompany.piaweb.modelos.Tournament;
 
 /**
  *
- * @author Carlo
+ 
  */
 public interface TournamentEngine {
     void generateBracket(Tournament tournament);

@@ -10,7 +10,6 @@ import java.util.Random;
 
 /**
  *
- * @author Carlo
  */
 
 public class MatchSimulator {
@@ -34,12 +33,12 @@ public class MatchSimulator {
         int awayGoals;
 
         if (r < pHomeWin) {
-            // Gana local
-            homeGoals = 1 + random.nextInt(4); // 1..4
-            awayGoals = random.nextInt(homeGoals + 1); // 0..homeGoals
+            
+            homeGoals = 1 + random.nextInt(4); 
+            awayGoals = random.nextInt(homeGoals + 1); 
             match.setWinner(home);
         } else {
-            // Gana visita
+           
             awayGoals = 1 + random.nextInt(4);
             homeGoals = random.nextInt(awayGoals + 1);
             match.setWinner(away);

@@ -46,7 +46,7 @@ public class EditProfileServlet extends HttpServlet {
 
         Users usuarioSesion = (Users) session.getAttribute("usuarioSesion");
 
-        // Capturar datos del formulario
+        
         String nombre = request.getParameter("nombre");
         String apellidos = request.getParameter("apellidos");
         String correo = request.getParameter("correo");
@@ -105,15 +105,15 @@ public class EditProfileServlet extends HttpServlet {
 
                 java.util.Calendar hoy = java.util.Calendar.getInstance();
 
-                // Cálculamos la edad
+                
                 int edad = hoy.get(java.util.Calendar.YEAR) - fechaNac.get(java.util.Calendar.YEAR);
 
-                // Revisar si ya cumplio años este año
+                
                 if (hoy.get(java.util.Calendar.DAY_OF_YEAR) < fechaNac.get(java.util.Calendar.DAY_OF_YEAR)) {
                     edad--;
                 }
 
-                // Verificar si es menor de 13
+               
                 if (edad < 13) {
                     session.setAttribute("mensajeFlash", "Fecha inválida: Debes tener al menos 13 años.");
                     session.setAttribute("tipoMensaje", "danger");
@@ -136,7 +136,7 @@ public class EditProfileServlet extends HttpServlet {
         try (Connection conn = conexion.Conectar()) {
             UsersDAO usersDAO = new UsersDAO(conn);
 
-            // Actualizar datos del usuario
+            
             usuarioSesion.setName(nombre);
             usuarioSesion.setLastname(apellidos);
             usuarioSesion.setEmail(correo);
@@ -145,7 +145,7 @@ public class EditProfileServlet extends HttpServlet {
                 usuarioSesion.setBirthday(birthday);
             }
 
-            // Manejo de foto de perfil
+           
             Part filePart = request.getPart("fotoPerfil");
             if (filePart != null && filePart.getSize() > 0) {
                 String submittedFileName = filePart.getSubmittedFileName();
@@ -170,15 +170,14 @@ public class EditProfileServlet extends HttpServlet {
                 usuarioSesion.setImage(fileName);
             }
 
-            // Actualizar usuario en la base de datos
-            usersDAO.updateUsuario(usuarioSesion); // nombre correcto del método
+            
+            usersDAO.updateUsuario(usuarioSesion); 
 
-            // Volver a leer el usuario de la base de datos para sincronizar todos los campos
+            
             Users usuarioActualizado = usersDAO.getUsuario(usuarioSesion.getIdUsers());
             session.setAttribute("usuarioSesion", usuarioActualizado);
 
-            // Actualizar sesión con los nuevos datos
-            //session.setAttribute("usuarioSesion", usuarioSesion);
+            
             response.sendRedirect("GetMyProfileServlet");
 
         } catch (Exception e) {

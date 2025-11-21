@@ -18,9 +18,9 @@ import jakarta.servlet.http.Part;
 
 @WebServlet(name = "ManagePostServlet", urlPatterns = {"/ManagePostServlet"})
 @MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
-        maxFileSize = 1024 * 1024 * 10, // 10 MB
-        maxRequestSize = 1024 * 1024 * 15 // 15 MB
+        fileSizeThreshold = 1024 * 1024 * 1, 
+        maxFileSize = 1024 * 1024 * 10, 
+        maxRequestSize = 1024 * 1024 * 15 
 )
 public class ManagePostServlet extends HttpServlet {
 
@@ -34,7 +34,7 @@ public class ManagePostServlet extends HttpServlet {
             return;
         }
 
-        // Obtener ID y Acción
+      
         String postIdStr = request.getParameter("postId");
         String action = request.getParameter("action");
 
@@ -81,21 +81,21 @@ public class ManagePostServlet extends HttpServlet {
                         uploadDir.mkdir();
                     }
 
-                    // Guardar el archivo físicamente en el servidor
+                    
                     filePart.write(uploadPath + File.separator + fileName);
                     System.out.println("Imagen actualizada guardada en: " + uploadPath + File.separator + fileName);
 
-                    // Crear objeto PostImage y asignarlo al Post
+                   
                     PostImage img = new PostImage();
                     img.setPostId(postId);
-                    img.setPath("public/uploads/" + fileName); // Ruta relativa para la DB
-                    img.setSortOrder(0); // 0 es la imagen principal según tu lógica
+                    img.setPath("public/uploads/" + fileName); 
+                    img.setSortOrder(0); 
 
-                    // Asignamos la imagen al post.
+                   
                     post.setImage(img);
                 }
 
-                // Actualizar en Base de Datos
+                
                 postsDAO.updatePost(post);
                 System.out.println("Post actualizado: " + postId);
             }

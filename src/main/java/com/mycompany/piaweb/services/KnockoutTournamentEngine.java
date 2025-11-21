@@ -21,7 +21,7 @@ public class KnockoutTournamentEngine {
         this.simulator = simulator;
     }
 
-    // Genera sólo cuartos (8 equipos) en base al listado de participantes
+   
     public void generateBracket(Tournament tournament) {
         List<TournamentParticipant> participants =
                 new ArrayList<>(tournament.getParticipants());
@@ -30,12 +30,12 @@ public class KnockoutTournamentEngine {
             throw new IllegalArgumentException("Se requieren al menos 8 participantes para KO");
         }
 
-        // Mezclar aleatoriamente
+        
         Collections.shuffle(participants);
 
         List<Match> matches = new ArrayList<>();
 
-        // Cuartos de final
+        
         for (int i = 0; i < 8; i += 2) {
             Match m = new Match();
             m.setTournamentId(tournament.getId());
@@ -52,7 +52,7 @@ public class KnockoutTournamentEngine {
     public void simulateAll(Tournament tournament) {
         List<Match> allMatches = new ArrayList<>(tournament.getMatches());
 
-        // 1) cuartos
+        
         List<TournamentParticipant> semifinalists = new ArrayList<>();
         for (Match m : allMatches) {
             if (m.getPhase() == MatchPhase.QUARTERFINAL) {
@@ -61,7 +61,7 @@ public class KnockoutTournamentEngine {
             }
         }
 
-        // 2) semis
+        
         List<Match> semis = new ArrayList<>();
         for (int i = 0; i < semifinalists.size(); i += 2) {
             Match semi = new Match();
@@ -75,7 +75,7 @@ public class KnockoutTournamentEngine {
         }
         allMatches.addAll(semis);
 
-        // 3) final
+        
         TournamentParticipant f1 = semis.get(0).getWinner();
         TournamentParticipant f2 = semis.get(1).getWinner();
 

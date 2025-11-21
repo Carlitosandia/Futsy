@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  *
- * @author Carlo
  */
 public class Tournament {
     private Long id;

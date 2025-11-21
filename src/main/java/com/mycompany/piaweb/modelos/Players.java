@@ -8,7 +8,7 @@ import java.sql.Date;
 
 /**
  *
- * @author Carlo
+ 
  */
 public class Players {
 

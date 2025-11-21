@@ -24,22 +24,22 @@ public class GlobalTournamentScheduler implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        // Se ejecuta cuando se levanta la app
-        // Pool de 2 hilos para correr 2 tareas periódicas
+        
+        
         scheduler = Executors.newScheduledThreadPool(2);
 
         scheduler.scheduleAtFixedRate(
                 new GlobalLeagueTournamentTask(),
                 0,
-                10,
+                1,
                 TimeUnit.MINUTES
         );
 
-// Mundial cada 5 min, empezando 1 min después
+
         scheduler.scheduleAtFixedRate(
                 new GlobalWorldCupTournamentTask(),
                 1,
-                10,
+                1,
                 TimeUnit.MINUTES
         );
     }
@@ -51,9 +51,7 @@ public class GlobalTournamentScheduler implements ServletContextListener {
         }
     }
 
-    // ==========================================================
-    //  Tarea 1: Liga General Global (clubes)
-    // ==========================================================
+    
     static class GlobalLeagueTournamentTask implements Runnable {
 
         private final TournamentDao tournamentDao;
@@ -70,18 +68,18 @@ public class GlobalTournamentScheduler implements ServletContextListener {
             try {
                 System.out.println("[Scheduler] Generando torneo global de Liga General...");
 
-                // 1. Crear torneo SIMULATED (global general)
+                
                 Tournament tournament = new Tournament();
                 tournament.setName("Liga General Global (auto)");
                 tournament.setMode(TournamentMode.GENERAL);
                 tournament.setSimulationAllowed(true);
-                // created_by_user_id = null -> sistema
+               
                 tournament.setCreated_by_user_id(null);
 
                 Long tournamentId = tournamentDao.createTournament(tournament);
                 tournament.setId(tournamentId);
 
-                // 2. Insertar participantes (8 equipos general random)
+                
                 List<TournamentParticipant> participants
                         = tournamentDao.insertParticipantsForGlobalGeneral(tournamentId, 8);
 
@@ -92,7 +90,7 @@ public class GlobalTournamentScheduler implements ServletContextListener {
                     return;
                 }
 
-                // 3. Calcular overall por participante
+                
                 for (TournamentParticipant p : participants) {
                     int overall;
                     if (p.getIsNational()) {
@@ -104,17 +102,17 @@ public class GlobalTournamentScheduler implements ServletContextListener {
                 }
                 tournament.setParticipants(participants);
 
-                // 4. Generar bracket (cuartos, semis, final)
+                
                 knockoutEngine.generateBracket(tournament);
 
-                // 5. Simular todos los partidos
+                
                 knockoutEngine.simulateAll(tournament);
 
-                // 6. Guardar partidos
+               
                 List<Match> matches = tournament.getMatches();
                 tournamentDao.insertMatches(matches);
 
-                // 7. Guardar campeón
+                
                 if (tournament.getChampion() != null) {
                     tournamentDao.updateChampion(
                             tournamentId,
@@ -131,9 +129,7 @@ public class GlobalTournamentScheduler implements ServletContextListener {
         }
     }
 
-    // ==========================================================
-    //  Tarea 2: Mundial Global (selecciones)
-    // ==========================================================
+    
     static class GlobalWorldCupTournamentTask implements Runnable {
 
         private final TournamentDao tournamentDao;
@@ -150,17 +146,17 @@ public class GlobalTournamentScheduler implements ServletContextListener {
             try {
                 System.out.println("[Scheduler] Generando torneo global de Mundial...");
 
-                // 1. Crear torneo WORLD_CUP (global mundial)
+               
                 Tournament tournament = new Tournament();
                 tournament.setName("Mundial Global (auto)");
                 tournament.setMode(TournamentMode.WORLD_CUP);
                 tournament.setSimulationAllowed(true);
-                tournament.setCreated_by_user_id(null); // sistema
+                tournament.setCreated_by_user_id(null); 
 
                 Long tournamentId = tournamentDao.createTournament(tournament);
                 tournament.setId(tournamentId);
 
-                // 2. Insertar participantes (ej: 16 selecciones random)
+               
                 List<TournamentParticipant> participants
                         = tournamentDao.insertParticipantsForWorldCup(tournamentId, 8);
 
@@ -171,7 +167,7 @@ public class GlobalTournamentScheduler implements ServletContextListener {
                     return;
                 }
 
-                // 3. Calcular overall
+               
                 for (TournamentParticipant p : participants) {
                     int overall;
                     if (p.getIsNational()) {
@@ -183,17 +179,17 @@ public class GlobalTournamentScheduler implements ServletContextListener {
                 }
                 tournament.setParticipants(participants);
 
-                // 4. Generar bracket
+               
                 knockoutEngine.generateBracket(tournament);
 
-                // 5. Simular partidos
+               
                 knockoutEngine.simulateAll(tournament);
 
-                // 6. Guardar partidos
+               
                 List<Match> matches = tournament.getMatches();
                 tournamentDao.insertMatches(matches);
 
-                // 7. Guardar campeón
+                
                 if (tournament.getChampion() != null) {
                     tournamentDao.updateChampion(
                             tournamentId,

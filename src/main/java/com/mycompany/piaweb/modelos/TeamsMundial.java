@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  *
- * @author Carlo
  */
 public class TeamsMundial {
 
@@ -70,10 +69,10 @@ public class TeamsMundial {
 
     public String getLogo() {
         if (this.country_id > 0) {
-            // Construimos la ruta dinámicamente
+           
             return "public/assets/banderas/" + this.country_id + ".png";
         }
-        // Si no hay país seleccionado, devolvemos el logo por defecto
+        
         return "public/assets/EquipoSinLogo.png";
     }
 

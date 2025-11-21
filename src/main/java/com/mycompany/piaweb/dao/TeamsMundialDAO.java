@@ -14,7 +14,6 @@ import java.util.List;
 
 /**
  *
- * @author Carlo
  */
 public class TeamsMundialDAO {
     Connection conn;
@@ -75,7 +74,7 @@ public class TeamsMundialDAO {
             ex.printStackTrace();
             try {
                 if (conn != null) {
-                    conn.rollback(); // Si hay error, deshacemos cambios
+                    conn.rollback(); 
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -156,7 +155,7 @@ public class TeamsMundialDAO {
                     team.setCountry_id(rs.getInt("country_id"));
                     team.setLogo(rs.getString("logo"));
                     
-                    // Cargamos la lista de IDs de jugadores para el JS
+                    
                     team.setPlayerIds(getMundialTeamPlayerIds(team.getId()));
                 }
             }
@@ -164,7 +163,7 @@ public class TeamsMundialDAO {
         return team;
     }
 
-    // 2. Método auxiliar para los jugadores
+    
     private List<Integer> getMundialTeamPlayerIds(int teamId) {
         List<Integer> ids = new java.util.ArrayList<>();
         String sql = "SELECT player_id FROM national_team_players WHERE national_team_id = ?";

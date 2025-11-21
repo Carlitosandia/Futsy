@@ -26,7 +26,7 @@ public class SimulateIndividualTournamentServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        this.tournamentDao = new TournamentDao(); // usa tu Conexion interna
+        this.tournamentDao = new TournamentDao(); 
         MatchSimulator simulator = new MatchSimulator();
         this.knockoutEngine = new KnockoutTournamentEngine(simulator);
     }
@@ -56,11 +56,11 @@ public class SimulateIndividualTournamentServlet extends HttpServlet {
         Long tournamentId = tournamentDao.createTournament(tournament);
         tournament.setId(tournamentId);
 
-        // Insertar participantes
+       
         List<TournamentParticipant> participants =
                 tournamentDao.insertParticipantsForGlobalGeneral(tournamentId, 8);
 
-        //  Calcular overall para cada participante
+        
         for (TournamentParticipant p : participants) {
             int overall;
             if (p.getIsNational()) {
@@ -72,22 +72,22 @@ public class SimulateIndividualTournamentServlet extends HttpServlet {
         }
         tournament.setParticipants(participants);
 
-        // Generar el bracket de KO
+        
         knockoutEngine.generateBracket(tournament);
 
-        // Simular todos los partidos
+        
         knockoutEngine.simulateAll(tournament);
 
-        // Guardar partidos en BD
+        
         List<Match> matches = tournament.getMatches();
         tournamentDao.insertMatches(matches);
 
-        //  Guardar campeón
+       
         if (tournament.getChampion() != null) {
             tournamentDao.updateChampion(tournamentId, tournament.getChampion().getId());
         }
 
-        // Redirigir a la liga individual mostrando ese torneo
+        
         response.sendRedirect("individualpage.jsp?tournamentId=" + tournamentId);
     }
 }

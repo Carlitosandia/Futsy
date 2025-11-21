@@ -10,8 +10,8 @@ package com.mycompany.piaweb.modelos;
  */
 public class PostImage {
     private int id;
-    private String path; // Ruta de la imagen
-    private int sortOrder; // Orden, opcional
+    private String path; 
+    private int sortOrder; 
     private int postId;
 
 

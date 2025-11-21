@@ -6,7 +6,6 @@ package com.mycompany.piaweb.enums;
 
 /**
  *
- * @author Carlo
  */
 public enum TournamentMode {
     GENERAL, WORLD_CUP, HEAD_TO_HEAD, SIMULATED

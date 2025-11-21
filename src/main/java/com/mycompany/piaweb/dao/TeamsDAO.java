@@ -13,7 +13,6 @@ import java.util.List;
 
 /**
  *
- * @author Carlo
  */
 public class TeamsDAO {
 
@@ -75,7 +74,7 @@ public class TeamsDAO {
             ex.printStackTrace();
             try {
                 if (conn != null) {
-                    conn.rollback(); // Si hay error, deshacemos cambios
+                    conn.rollback(); 
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -137,12 +136,12 @@ public class TeamsDAO {
 }
 
 
-    // Método para ACTUALIZAR
+    
     public boolean updateTeamGeneral(Teams team, List<Integer> playerIds) {
         try {
             conn.setAutoCommit(false);
 
-            // 1. Actualizar datos básicos del equipo
+            
             String sqlUpdate = "UPDATE teams SET name = ?, logo = ? WHERE id = ? AND owner_user_id = ?";
             try (PreparedStatement ps = conn.prepareStatement(sqlUpdate)) {
                 ps.setString(1, team.getName());
@@ -152,7 +151,7 @@ public class TeamsDAO {
                 ps.executeUpdate();
             }
 
-            // 2. Actualizar Jugadores: Borrar viejos -> Insertar nuevos
+            
             String sqlDeletePlayers = "DELETE FROM team_players WHERE team_id = ?";
             try (PreparedStatement psDel = conn.prepareStatement(sqlDeletePlayers)) {
                 psDel.setInt(1, team.getId());

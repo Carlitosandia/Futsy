@@ -8,7 +8,6 @@ import java.sql.Date;
 
 /**
  *
- * @author Carlo
  */
 public class SearchBar {
     private String title;

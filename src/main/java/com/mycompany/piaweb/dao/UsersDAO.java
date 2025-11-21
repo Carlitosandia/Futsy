@@ -144,16 +144,15 @@ public class UsersDAO {
     }
     
     public void updateUsuario(Users usuario){
-    String sql = "UPDATE users SET name = ?, lastname = ?, email = ?, birthday = ?, image_url = ?, status = ?, `password` = ? WHERE id = ?";
+    String sql = "UPDATE users SET name = ?, lastname = ?, email = ?, birthday = ?, image_url = ?, `password` = ? WHERE id = ?";
     try (PreparedStatement ps = conn.prepareStatement(sql)) {
         ps.setString(1, usuario.getName());
         ps.setString(2, usuario.getLastname());
         ps.setString(3, usuario.getEmail());
         ps.setDate(4, usuario.getBirthday()); // java.sql.Date
         ps.setString(5, usuario.getImage());
-        ps.setString(6, usuario.isStatus() ? "active" : "banned");  // status activo/inactivo
-        ps.setString(7, usuario.getPassword()); 
-        ps.setInt(8, usuario.getIdUsers());
+        ps.setString(6, usuario.getPassword()); 
+        ps.setInt(7, usuario.getIdUsers());
 
         int update = ps.executeUpdate();
 

@@ -41,31 +41,27 @@ public class SimulateGeneralTournamentServlet extends HttpServlet {
             response.sendRedirect("index.jsp");
             return;
         }
-        // Obtener el objeto Users de la sesión
+        
         com.mycompany.piaweb.modelos.Users usuarioSesion = (com.mycompany.piaweb.modelos.Users) session.getAttribute("usuarioSesion");
         int userId = usuarioSesion.getIdUsers();
 
-        // 1. Crear objeto Tournament (en memoria)
+        
         Tournament tournament = new Tournament();
         tournament.setName("Liga General - Usuario " + userId);
         tournament.setMode(TournamentMode.GENERAL);
         tournament.setSimulationAllowed(true);
-        tournament.setCreated_by_user_id(Long.valueOf(userId)); // o null si quieres que sea “del sistema”
+        tournament.setCreated_by_user_id(Long.valueOf(userId)); 
 
-        // 2. Persistir torneo en BD
+        
         Long tournamentId = tournamentDao.createTournament(tournament);
         tournament.setId(tournamentId);
 
-        // 3. Insertar participantes
-        //   Opción A: solo el equipo del usuario
-        //   List<TournamentParticipant> participants =
-        //           tournamentDao.insertParticipantsForGeneral(tournamentId, userId);
-
-        //   Opción B: torneo de 8 equipos random general (puedes mezclar luego)
+        
+        
         List<TournamentParticipant> participants =
                 tournamentDao.insertParticipantsForGlobalGeneral(tournamentId, 8);
 
-        // 4. Calcular el overall de cada participante
+        
         for (TournamentParticipant p : participants) {
             int overall;
             if (p.getIsNational()) {
@@ -77,22 +73,22 @@ public class SimulateGeneralTournamentServlet extends HttpServlet {
         }
         tournament.setParticipants(participants);
 
-        // 5. Generar el cuadro (cuartos)
+        
         knockoutEngine.generateBracket(tournament);
 
-        // 6. Simular todos los partidos (cuartos, semis, final)
+        
         knockoutEngine.simulateAll(tournament);
 
-        // 7. Guardar los partidos en la BD
+       
         List<Match> matches = tournament.getMatches();
         tournamentDao.insertMatches(matches);
 
-        // 8. Actualizar campeón en la tabla tournaments
+        
         if (tournament.getChampion() != null) {
             tournamentDao.updateChampion(tournamentId, tournament.getChampion().getId());
         }
 
-        // 9. Redirigir a la página donde se pinta el bracket
+        
         response.sendRedirect("ligaGeneral.jsp?tournamentId=" + tournamentId);
     }
 }

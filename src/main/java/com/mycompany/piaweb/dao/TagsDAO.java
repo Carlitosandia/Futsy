@@ -19,7 +19,7 @@ import java.util.List;
 public class TagsDAO {
      Connection conn;
 
-    //Por medio del constructor puede acceder a la conexion establecida en la clase Conexion.
+    
     public TagsDAO(Connection conn) {
         this.conn = conn;
     }
@@ -73,7 +73,7 @@ public class TagsDAO {
         }
 
     } catch (SQLException e) {
-        e.printStackTrace(); // para ver el error en consola si algo falla
+        e.printStackTrace(); 
     }
 
     return listaTags;

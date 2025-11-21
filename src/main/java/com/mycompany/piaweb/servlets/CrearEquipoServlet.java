@@ -29,7 +29,6 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Carlo
  */
 @WebServlet(name = "CrearEquipoServlet", urlPatterns = {"/CrearEquipoServlet"})
 @MultipartConfig
@@ -90,16 +89,16 @@ public class CrearEquipoServlet extends HttpServlet {
         }
         Users usuarioSesion = (Users) session.getAttribute("usuarioSesion");
 
-        // Recibir parámetros básicos
+        
         String teamName = request.getParameter("nombreEquipo");
         String teamType = request.getParameter("tipoEquipo");
         String playerListRaw = request.getParameter("jugadoresSeleccionados");
 
-        // 1. DETECTAR SI ES EDICIÓN (Recibimos un ID oculto desde el JSP)
+       
         String teamIdParam = request.getParameter("teamId");
         boolean isEdit = (teamIdParam != null && !teamIdParam.isEmpty());
 
-        // Procesar IDs de jugadores... (Igual que tu código actual)
+       
         List<Integer> playerIds = new ArrayList<>();
         if (playerListRaw != null && !playerListRaw.isEmpty()) {
             String[] parts = playerListRaw.split(",");
@@ -111,7 +110,7 @@ public class CrearEquipoServlet extends HttpServlet {
         String logoPathForDB = "public/assets/EquipoSinLogo.png";
 
         if (isEdit) {
-            // Si es edición, recuperamos el logo anterior por si no sube uno nuevo
+           
             logoPathForDB = request.getParameter("logoActual");
         }
         Part filePart = request.getPart("logoEquipo");
@@ -152,10 +151,10 @@ public class CrearEquipoServlet extends HttpServlet {
             boolean exito;
 
             if (isEdit) {
-                // ACTUALIZAR
+               
                 exito = teamsDAO.updateTeamGeneral(team, playerIds);
             } else {
-                // CREAR
+               
                 exito = teamsDAO.insertTeamGeneral(team, playerIds);
             }
 

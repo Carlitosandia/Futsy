@@ -6,7 +6,6 @@ package com.mycompany.piaweb.modelos;
 
 /**
  *
- * @author Carlo
  */
 public class TournamentParticipant {
     private Long id;           

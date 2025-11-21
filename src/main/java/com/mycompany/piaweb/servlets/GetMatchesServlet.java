@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Carlo
  */
 @WebServlet(name = "GetMatchesServlet", urlPatterns = {"/GetMatchesServlet"})
 public class GetMatchesServlet extends HttpServlet {

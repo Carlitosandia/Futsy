@@ -6,7 +6,6 @@ package com.mycompany.piaweb.modelos;
 
 /**
  *
- * @author Carlo
  */
 public class Countries {
     private int id;

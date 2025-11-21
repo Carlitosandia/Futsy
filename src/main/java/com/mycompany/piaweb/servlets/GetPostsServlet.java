@@ -65,13 +65,13 @@ public class GetPostsServlet extends HttpServlet {
                 request.setAttribute("feedTitle", "PARA TI");
             }
 
-            // A cada post, agregar su imagen principal
+            
             for (Post post : posts) {
                 PostImage img = postsDAO.getPostImage(post.getId());
                 post.setImage(img);
             }
 
-            // Paginación
+           
             int page = 1;
             String pageParam = request.getParameter("page");
             if (pageParam != null) {
@@ -91,7 +91,7 @@ public class GetPostsServlet extends HttpServlet {
 
             List<Post> postsPage = posts.subList(start, end);
 
-            // Guardamos los posts en el request
+            
             request.setAttribute("posts", postsPage);
             request.setAttribute("currentPage", page);
             request.setAttribute("totalPages", (int) Math.ceil((double) totalPosts / POSTS_PER_PAGE));
@@ -100,11 +100,11 @@ public class GetPostsServlet extends HttpServlet {
             List<Tags> tags = tagsDAO.getAll();
             request.setAttribute("tags", tags);
 
-            System.out.println("Tags encontrados: " + tags.size()); // para revisar
+            System.out.println("Tags encontrados: " + tags.size()); 
 
             request.setAttribute("tags", tags);
 
-            // Enviamos a la página JSP
+            
             request.getRequestDispatcher("parati.jsp").forward(request, response);
 
         } catch (Exception e) {

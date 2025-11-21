@@ -91,10 +91,10 @@ public class RegistroServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //Se reciben la informacion del formulario que envia la vista
+        
         Part filePart = request.getPart("fotoR");
         final String fileName = request.getParameter("usuarioR") + ".jpg";
-        File dir = new File("C:\\Users\\Carlo\\Documents\\PIAWEB-Av\\PIAWEB\\src\\main\\webapp\\public\\imagenes\\" + request.getParameter("usuarioR") + "\\FotoPerfil\\");
+        File dir = new File("C:\\Users\\Sofia\\Documents\\Futsy\\src\\main\\webapp\\public\\imagenes\\" + request.getParameter("usuarioR") + "\\FotoPerfil\\");
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -109,7 +109,7 @@ public class RegistroServlet extends HttpServlet {
         LocalDate fechaCreacion = LocalDate.now();
         Date fechaC = Date.from(fechaCreacion.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        //Convertir string a fecha
+        
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String text_fechaNacimiento = request.getParameter("fechaNacimiento");
         java.util.Date fecha_Nacimiento_util = null;
@@ -123,15 +123,15 @@ public class RegistroServlet extends HttpServlet {
 
             java.util.Calendar hoy = java.util.Calendar.getInstance();
 
-            // Calcular la diferencia de años
+            
             int edad = hoy.get(java.util.Calendar.YEAR) - fechaNac.get(java.util.Calendar.YEAR);
 
-            // Ajustar la fecha de cumpleaños para saber si este año ya fue su cumple
+            
             if (hoy.get(java.util.Calendar.DAY_OF_YEAR) < fechaNac.get(java.util.Calendar.DAY_OF_YEAR)) {
                 edad--;
             }
 
-            // Verificar si es menor de 13
+            
             if (edad < 13) {
                 request.setAttribute("MensajeRegistro", "Debes tener al menos 13 años para registrarte.");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
@@ -195,7 +195,7 @@ public class RegistroServlet extends HttpServlet {
         Conexion conn = null;
         try {
 
-            //Se crea un objeto del modelo para despues llenarlo con los datos capturados
+            
             Users usuario = new Users();
             usuario.setName(nombreUsuario);
             usuario.setLastname(ApellidosUsuario);
@@ -209,17 +209,17 @@ public class RegistroServlet extends HttpServlet {
             usuario.setBirthday(sqlFechaNacimiento);
 
             System.out.println("Se termino de insertar");
-            //Se declara el objeto de la conexion
+            
             conn = new Conexion();
             System.out.println("Se instancio la conexion");
-            //Conectamos el DAO utilizando el objeto de Conexion y el metodo conectar()
+            
             UsersDAO uDao = new UsersDAO(conn.Conectar());
             System.out.println("UsersDAO");
-            //Recibimos la respuesta del metodo del DAO
+            
             boolean insert = uDao.insertUsuario(usuario);
             System.out.println("Boolean insert");
             if (insert) {
-                //Metodo para redireccionar a otra vista/Servlet
+                
                 request.setAttribute("MensajeRegistro", "Usuario registrado correctamente");
                 request.getRequestDispatcher("index.jsp").forward(request, response);
                 System.out.println("Metodo para redireccionar a otra vista/Servlet");
@@ -232,7 +232,7 @@ public class RegistroServlet extends HttpServlet {
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(RegistroServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            // Ya no se llama a conn.Desconectar()
+            
             System.out.println("RegistroServlet finalizado");
         }
     }

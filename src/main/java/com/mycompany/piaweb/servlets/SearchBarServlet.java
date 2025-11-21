@@ -1,7 +1,7 @@
 package com.mycompany.piaweb.servlets;
 
 import com.mycompany.piaweb.clases.Conexion;
-import com.mycompany.piaweb.dao.PostsDAO; // Necesario para buscar las imágenes
+import com.mycompany.piaweb.dao.PostsDAO; 
 import com.mycompany.piaweb.dao.SearchBarDAO;
 import com.mycompany.piaweb.dao.TagsDAO;
 import com.mycompany.piaweb.modelos.Post;
@@ -26,8 +26,8 @@ public class SearchBarServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // Recibir parámetros
-        String type = request.getParameter("type"); // "advanced" o null
+      
+        String type = request.getParameter("type"); 
         String simpleQuery = request.getParameter("q");
         
         Conexion conexion = new Conexion();
@@ -37,10 +37,10 @@ public class SearchBarServlet extends HttpServlet {
             SearchBarDAO searchDAO = new SearchBarDAO(conn);
             String tituloFeed = "";
 
-            // --- LÓGICA DE SELECCIÓN DE BÚSQUEDA ---
+            
             
             if ("advanced".equals(type)) {
-                // >> BÚSQUEDA AVANZADA
+                
                 String searchText = request.getParameter("searchText");
                 String searchTagId = request.getParameter("searchTagId");
                 String dateFrom = request.getParameter("dateFrom");
@@ -49,22 +49,21 @@ public class SearchBarServlet extends HttpServlet {
                 allPosts = searchDAO.advancedSearch(searchText, searchTagId, dateFrom, dateTo);
                 tituloFeed = "Resultados filtrados";
                 
-                // Pasamos los parámetros de vuelta para mantener la paginación (si quisieras implementarlo al 100%)
-                // Por ahora, simple.
+                
                 
             } else if (simpleQuery != null && !simpleQuery.trim().isEmpty()) {
-                // >> BÚSQUEDA SIMPLE
+               
                 allPosts = searchDAO.singleSearch(simpleQuery.trim());
                 tituloFeed = "Resultados para: \"" + simpleQuery + "\"";
             } else {
-                // Nada seleccionado
+                
                 response.sendRedirect("GetPostsServlet");
                 return;
             }
             
             request.setAttribute("feedTitle", tituloFeed);
 
-            // --- DE AQUÍ HACIA ABAJO ES EXACTAMENTE IGUAL (Paginación) ---
+            
             
             int page = 1;
             String pageParam = request.getParameter("page");
@@ -83,7 +82,7 @@ public class SearchBarServlet extends HttpServlet {
             int end = Math.min(start + POSTS_PER_PAGE, totalPosts);
             List<Post> postsPage = allPosts.subList(start, end);
 
-            // Cargar imágenes
+            
             PostsDAO postsDAO = new PostsDAO(conn); 
             for (Post post : postsPage) {
                 PostImage img = postsDAO.getPostImage(post.getId());

@@ -9,7 +9,7 @@ import java.sql.Date;
 
 /**
  *
- * @author Carlo
+ *
  */
 public class Match {
     private Long id; 

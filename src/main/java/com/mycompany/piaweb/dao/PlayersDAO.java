@@ -15,7 +15,6 @@ import java.util.List;
  */
 /**
  *
- * @author Carlo
  */
 public class PlayersDAO {
 

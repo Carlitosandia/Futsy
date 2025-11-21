@@ -32,7 +32,7 @@ import java.util.List;
 @WebServlet(name = "GetMyProfileServlet", urlPatterns = {"/GetMyProfileServlet"})
 public class GetMyProfileServlet extends HttpServlet {
     
-    private static final int POSTS_POR_PAGINA = 10; // Número de posts por página
+    private static final int POSTS_POR_PAGINA = 10; 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -47,7 +47,7 @@ public class GetMyProfileServlet extends HttpServlet {
 
         Users usuarioSesion = (Users) session.getAttribute("usuarioSesion");
         
-        // Obtener parámetro de página, si no existe, la primera página (1)
+        
         int pagina = 1;
         String paginaParam = request.getParameter("pagina");
         if (paginaParam != null) {
@@ -64,13 +64,10 @@ public class GetMyProfileServlet extends HttpServlet {
             UsersDAO usersDAO = new UsersDAO(conn);
             PostsDAO postsDAO = new PostsDAO(conn);
 
-            // Obtener información actualizada del usuario
+            
             Users usuario = usersDAO.getUsuario(usuarioSesion.getIdUsers());
 
-            // Obtener posts creados por este usuario
-            //List<Post> postsUsuario = postsDAO.getPostsByUser(usuario.getIdUsers());
-            
-            // Formatear fecha de nacimiento a dd-MM-yyyy para mostrar en JSP
+           
             if (usuario.getBirthday() != null) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 String fechaFormateada = sdf.format(usuario.getBirthday());
@@ -79,22 +76,22 @@ public class GetMyProfileServlet extends HttpServlet {
                 request.setAttribute("birthdayFormatted", "");
             }
             
-            // Obtener total de posts del usuario
+          
             int totalPosts = postsDAO.countPostsByUser(usuario.getIdUsers());
 
-            // Calcular offset para la consulta
+            
             int offset = (pagina - 1) * POSTS_POR_PAGINA;
 
-            // Traer posts de la página actual
+            
             List<Post> postsUsuario = postsDAO.getPostsByUser(usuario.getIdUsers(), offset, POSTS_POR_PAGINA);
 
-            // Traer imagen principal de cada post
+           
             for (Post post : postsUsuario) {
                 PostImage img = postsDAO.getPostImage(post.getId());
                 post.setImage(img);
             }
             
-            // Calcular total de páginas
+            
             int totalPaginas = (int) Math.ceil((double) totalPosts / POSTS_POR_PAGINA);
 
             request.setAttribute("usuario", usuario);

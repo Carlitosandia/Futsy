@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Carlo
  */
 public class Teams {
         private int id;
