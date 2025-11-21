@@ -12,7 +12,7 @@ import java.sql.Date;
  */
 public class Users {
 
-    int idUsers;
+    int id;
     String name;
     String lastname;
     String username;
@@ -31,7 +31,7 @@ public class Users {
     }
 
     public Users(int idUsers, String name, String lastname, String username, Date birthday, String email, String phone, String password, boolean status, String image_url, Date created_at, Date updated_at, Date deleted_at) {
-        this.idUsers = idUsers;
+        this.id = idUsers;
         this.name = name;
         this.lastname = lastname;
         this.username = username;
@@ -47,11 +47,11 @@ public class Users {
     }
 
     public int getIdUsers() {
-        return idUsers;
+        return id;
     }
 
     public void setIdUsers(int idUsers) {
-        this.idUsers = idUsers;
+        this.id = idUsers;
     }
 
     public String getName() {

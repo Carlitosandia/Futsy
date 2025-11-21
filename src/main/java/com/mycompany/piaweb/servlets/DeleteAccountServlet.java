@@ -39,13 +39,10 @@ public class DeleteAccountServlet extends HttpServlet {
 
         try (Connection conn = new Conexion().Conectar()) {
             UsersDAO usersDAO = new UsersDAO(conn);
-           
-            usuarioSesion.setStatus(false); 
-            usuarioSesion.setDeleted_at(new Date(System.currentTimeMillis()));
-            usersDAO.updateUsuario(usuarioSesion);
-           
-            session.invalidate();
-            
+
+            usersDAO.deleteUsuario(usuarioSesion.getIdUsers());
+
+            session.invalidate(); 
             response.sendRedirect("index.jsp");
 
         } catch (Exception e) {

@@ -78,7 +78,7 @@ public class EditProfileServlet extends HttpServlet {
         if (passwordUpdated != null) {
             if (!passwordUpdated.matches(regexPassword)) {
                 System.out.println("Error: La contraseña no cumple los requisitos de seguridad.");
-                session.setAttribute("mensajeFlash", "Las contraseñas no coinciden. Inténtalo de nuevo.");
+                session.setAttribute("mensajeFlash", "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo.");
                 session.setAttribute("tipoMensaje", "danger"); 
                 response.sendRedirect("GetMyProfileServlet");
                 return;
@@ -89,6 +89,8 @@ public class EditProfileServlet extends HttpServlet {
             return;
         }
 
+        System.out.println("Contrasenia vieja: " + passwordUpdated);
+        System.out.println("Contrasenia confirmacion: " + passwordConfirm);
         if (!passwordUpdated.equals(passwordConfirm)) {
             session.setAttribute("mensajeFlash", "Las contraseñas no coinciden. Inténtalo de nuevo.");
             session.setAttribute("tipoMensaje", "danger"); 
