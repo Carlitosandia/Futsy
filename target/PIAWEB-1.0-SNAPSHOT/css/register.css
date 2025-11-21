@@ -1,0 +1,114 @@
+/* --- CONTENEDOR PRINCIPAL --- */
+
+body.registrar-bg {
+    margin: 0;
+    background: #ffffff;
+    display: flex;
+    min-height: 100vh;
+}
+
+
+.register-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+/* --- COLUMNA IZQUIERDA --- */
+
+.col-left-register {
+    flex: 1;
+    background-color: #102c54;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-content {
+    text-align: center;
+}
+
+.col-titulo-register {
+    font-size: 38px;
+    color: white;
+    margin-bottom: 20px;
+    font-family: system-ui, sans-serif;
+}
+
+.logo-register {
+    width: 220px;
+    height: auto;
+    margin-top: 10px;
+}
+
+/* --- COLUMNA DERECHA --- */
+
+.col-right-register {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 40px 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+#idCreateAccount {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #102c54;
+    text-align: center;
+    font-family: system-ui, sans-serif;
+}
+
+#idRegistrar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.label-names {
+    font-weight: bold;
+    font-family: system-ui, sans-serif;
+}
+
+.input {
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #d3d3d3;
+    font-size: 16px;
+}
+
+/* Botón registrar */
+
+#idButtonRegistrar {
+    margin-top: 15px;
+    background-color: #102c54;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.2s ease;
+}
+
+#idButtonRegistrar:hover {
+    background-color: #234a85;
+}
+
+/* --- MENSAJE DE ERROR --- */
+
+.alerta-registro {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff6961;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-family: system-ui, sans-serif;
+    z-index: 10;
+}

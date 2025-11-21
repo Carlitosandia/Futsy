@@ -1,0 +1,85 @@
+/* ============ POSTS  ============ */
+:root {
+  --posts-surface: #e8e8e8;
+  --posts-tile: #cfcfcf;
+  --posts-radius: 18px;
+  --posts-shadow: 0 18px 32px rgba(0, 0, 0, .12);
+  --posts-edge: rgba(255, 255, 255, .75);
+}
+
+/* Body de la sección */
+body.noticiero-bg {
+  min-height: 100vh;
+  color: #111;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  text-align: center;
+}
+
+/* ====== Bloque principal ====== */
+#idBackgroundN {
+  width: min(1200px, calc(100% - 56px));
+  margin: 24px auto 36px;
+  background: var(--posts-surface);
+  border-radius: var(--posts-radius);
+  box-shadow: var(--posts-shadow), inset 0 1px 0 var(--posts-edge);
+
+  display: grid;
+  place-items: center;
+  padding: clamp(20px, 6vw, 48px);
+}
+
+#idTextN {
+  margin: 0;
+  font-weight: 900;
+  font-size: clamp(28px, 6vw, 72px);
+  letter-spacing: .02em;
+  text-align: center;
+}
+
+/* ====== Dos tarjetas inferiores ====== */
+#idBackgroundN1,
+#idBackgroundN2 {
+  display: inline-block;
+  vertical-align: top;
+  width: min(560px, calc(50% - 24px));
+  min-height: 240px;
+
+  margin: 0 12px 60px;
+  background: var(--posts-tile);
+  border-radius: var(--posts-radius);
+  box-shadow: var(--posts-shadow), inset 0 1px 0 var(--posts-edge);
+  padding: clamp(16px, 3vw, 28px);
+
+  text-align: left;
+}
+
+#idTextN1,
+#idTextN2 {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(18px, 2.4vw, 28px);
+  line-height: 1.25;
+}
+
+/* Párrafos dentro de las tarjetas */
+#idBackgroundN1 p,
+#idBackgroundN2 p {
+  margin-top: 10px;
+  font-size: clamp(14px, 1.4vw, 16px);
+  color: #333;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 900px) {
+
+  #idBackgroundN1,
+  #idBackgroundN2 {
+    width: min(100%, 720px);
+    display: block;
+    margin: 16px auto;
+  }
+
+  body.noticiero-bg {
+    
+  }
+}

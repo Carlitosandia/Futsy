@@ -1,0 +1,327 @@
+:root{
+    /* Variables de Diseño */
+    --bg-section: #f8f9fa;
+    --bg-card: #ffffff;
+    --radius: 12px;
+    --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    --text: #1f2937;
+    --text-muted: #6b7280;
+    --brand: #102c54; /* Azul oscuro */
+    --accent: #4f96be; /* Azul claro */
+    --success: #10b981;
+    --danger: #dc2626;
+    --input-bg: #f9fafb;
+    --border-color: #e5e7eb;
+}
+
+/* --- Estilos Generales --- */
+.page {
+    padding-top: var(--headerh);
+    background-color: var(--bg-section);
+    min-height: 100vh;
+}
+
+/* ---------- Título ---------- */
+.pr-head{
+    background: var(--accent);
+    padding: 30px 0;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.pr-title{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-size: 36px;
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ---------- Grid principal ---------- */
+.content-grid{
+    display: grid;
+    grid-template-columns: 1fr 400px; /* Columna derecha fija de 400px */
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto 100px auto;
+    padding: 0 20px;
+}
+
+@media (max-width: 900px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+    .profile {
+        order: -1; /* Perfil arriba en móvil */
+    }
+}
+
+/* ---------- Tarjetas Base ---------- */
+.card{
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    overflow: hidden; /* Para que nada se salga de los bordes redondeados */
+}
+
+/* ---------- COLUMNA IZQUIERDA: FEED ---------- */
+.bar{
+    display: flex; align-items: center; gap: 12px;
+    background: var(--brand); 
+    color: white;
+    border-radius: var(--radius);
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
+}
+.bar-title{ margin:0; font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
+.bar-icon { stroke: white; width: 20px; height: 20px; }
+
+.posts-list{ display: flex; flex-direction: column; gap: 30px; }
+
+/* --- NUEVA TARJETA UNIFICADA DE POST --- */
+.post-card {
+    padding: 0; /* Quitamos padding del contenedor principal para manejarlo internamente */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 1. Cabecera del Post */
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.post-header .pfp {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent);
+}
+.user-info { display: flex; flex-direction: column; }
+.user-name { margin: 0; font-size: 16px; font-weight: 700; color: var(--brand); }
+.user-handle { font-size: 13px; color: var(--text-muted); }
+
+/* 2. Formulario de Contenido (Inputs Editables) */
+.post-content-form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilos de los Inputs "Invisibles" pero editables */
+.editable-input, .editable-textarea {
+    width: 100%;
+    border: 1px solid transparent; /* Borde invisible por defecto */
+    background: transparent;
+    font-family: inherit;
+    padding: 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.editable-input:hover, .editable-textarea:hover {
+    background-color: var(--input-bg); /* Ligero gris al pasar el mouse */
+}
+
+.editable-input:focus, .editable-textarea:focus {
+    background-color: #fff;
+    border-color: var(--accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 150, 190, 0.1);
+}
+
+/* Título */
+.post-title-input {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* Descripción */
+.post-desc-input {
+    font-size: 15px;
+    color: #4b5563;
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* Imagen y Upload */
+.post-media-container {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f3f4f6;
+    border: 1px solid var(--border-color);
+}
+
+.current-post-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.no-image-placeholder {
+    padding: 40px;
+    text-align: center;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Botón de subir archivo personalizado */
+.file-upload-wrapper {
+    background: #f9fafb;
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.file-upload-input {
+    display: none; /* Ocultamos el input feo */
+}
+
+.file-upload-label {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    transition: all 0.2s;
+}
+
+.file-upload-label:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+/* 3. Barra de Acciones (Botones) */
+.post-actions {
+    padding: 15px 20px;
+    background-color: #f9fafb;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between; /* Separa los botones a los extremos */
+    align-items: center;
+}
+
+.btn-save {
+    background-color: var(--success);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+}
+.btn-save:hover { background-color: #059669; }
+
+.btn-delete {
+    background-color: transparent;
+    color: var(--danger);
+    padding: 8px 16px;
+    border: 1px solid var(--danger);
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+.btn-delete:hover {
+    background-color: var(--danger);
+    color: white;
+}
+
+
+/* ---------- COLUMNA DERECHA: PERFIL ---------- */
+.card-dark {
+    background: var(--brand);
+    color: white;
+    border: none;
+}
+
+.profile {
+    padding: 30px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    height: fit-content; /* Se ajusta al contenido */
+}
+
+.profile-title { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: 1px; }
+
+.avatar-lg {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 4px solid rgba(255,255,255,0.2);
+    object-fit: cover;
+}
+
+.profile-info-text p {
+    font-size: 15px;
+    color: #bfdbfe; /* Azul muy claro */
+    margin: 0;
+    text-align: center;
+}
+
+/* Formulario de Perfil */
+.profile-form { width: 100%; margin-top: 10px; }
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 15px; }
+.label { font-size: 12px; font-weight: 700; color: #93c5fd; text-transform: uppercase; }
+
+.input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    color: white;
+    font-size: 14px;
+}
+.input:focus {
+    background: rgba(255,255,255,0.1);
+    border-color: var(--accent);
+    outline: none;
+}
+
+/* Layout de inputs perfil */
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+@media (max-width: 500px) { .row-2 { grid-template-columns: 1fr; } }
+
+.input-file-profile {
+    font-size: 12px;
+    color: #d1d5db;
+}
+
+/* Botones Perfil */
+.w-100 { width: 100%; }
+.btn-primary {
+    background: var(--accent);
+    border: none;
+    padding: 12px;
+    color: white; font-weight: 700; border-radius: 6px; cursor: pointer;
+}
+.btn-primary:hover { background: #3b82f6; }
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+    border: none; padding: 10px; font-weight: 700; border-radius: 6px; cursor: pointer;
+}
+.btn-danger:hover { background: #dc2626; }
+
+/* Paginación */
+.pagination { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
+.pagination .btn { padding: 8px 12px; font-size: 14px; }
+.pagination .btn-secondary { background: #e5e7eb; color: var(--text); }
+.pagination .btn-secondary:hover { background: #d1d5db; }

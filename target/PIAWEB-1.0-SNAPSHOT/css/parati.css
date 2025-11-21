@@ -1,0 +1,361 @@
+/*
+ * Archivo: parati.css
+ * Descripción: Estilo alineado con el diseño de Perfil de Usuario (oscuro/azul).
+ */
+
+/* --- Variables de Diseño (Alineadas con miperfil.css) --- */
+:root {
+    --bg-page: #f8f8f8; /* Fondo de la página (gris muy claro) */
+    --bg-section: #e9e9e9; /* Fondo de tarjetas claras (Posts) */
+    --radius: 12px;
+    --shadow: 0 4px 12px rgba(0,0,0,.15);
+    --text: #1f2937;
+    --text-muted: #9ca3af; /* Más claro para contraste en fondo oscuro */
+    --brand: #102c54; /* Azul oscuro primario */
+    --accent: #4f96be; /* Azul claro de acento */
+    --success: #10b981;
+}
+
+/* Aplicar el color de fondo de la página de perfil */
+.parati-bg {
+    background-color: var(--bg-page);
+}
+
+
+/* --- Layout Principal --- */
+
+.page {
+    padding-top: var(--headerh);
+}
+
+/* Grid principal: 2 columnas */
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; 
+    gap: 30px; 
+    max-width: 1200px;
+    margin: 30px auto; 
+    padding: 0 20px; 
+}
+
+/* Responsividad: En pantallas pequeñas, apilamos Feed y Sidebar */
+@media (max-width: 900px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .sidebar {
+        position: static; 
+        order: -1;
+    }
+}
+
+
+/* Feed y Sidebar */
+.feed {
+    width: 100%;
+}
+.sidebar {
+    width: 100%;
+    position: sticky;
+    top: 20px; 
+    align-self: flex-start; 
+}
+
+
+/***** === Componentes Comunes ===*****/
+
+/* Tarjeta base (Usaremos blanco por defecto para los posts) */
+.card {
+    background: var(--bg-section); 
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.2s; 
+}
+
+
+/* Barra Superior: "PARA TI" (Estilo alineado con "PERFIL DE USUARIO") */
+#idParaTiContainer {
+    background: var(--accent); /* Azul de acento */
+    color: white; 
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+#idParaTiText {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#idBallImage {
+    width: 26px;
+    height: 26px;
+    filter: invert(100%);
+}
+
+
+/***** === Caja de Publicación (Post Form) - Estilo Oscuro ===*****/
+
+#postFormContainer {
+    margin-bottom: 20px;
+    padding: 25px; 
+    /* Aplicar el estilo de tarjeta oscura */
+    background: var(--bg-section);
+    color: black;
+    box-shadow: 0 8px 16px rgba(0,0,0,.3);
+}
+
+
+#postForm {
+    display: flex;
+    flex-direction: column; 
+    gap: 15px;
+}
+
+/* Estilos de Inputs y Textarea */
+#postForm input[type="text"],
+#postForm textarea,
+#postForm input[type="file"] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px var(--accent);
+    border: 1px solid var(--accent);
+    font-size: 16px;
+    background: white; /* Fondo oscuro de input */
+    color:  black; /* Texto blanco */
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    outline: none;
+}
+#postForm ::placeholder {
+    color: var(--text-muted); 
+    opacity: 1; 
+}
+
+#postDescription {
+    min-height: 120px; 
+    resize: vertical;
+}
+
+#postForm input[type="file"] {
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+
+/* Botón de publicar (Mantenemos verde) */
+#postForm button {
+    width: 95%; 
+    background: var(--brand); 
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 14px; 
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+#postForm button:hover {
+    background: #0c9e70; 
+    transform: translateY(-1px);
+}
+
+/* Tags de selección en el formulario oscuro */
+.tags-select-container {
+    color: white; /* Contenedor de tags en blanco */
+}
+.tags-label {
+    color: black;
+}
+.tag-pill {
+    color: black;
+}
+
+
+
+
+/***** === Post Individual (Card - Mantenemos Claro) ===*****/
+#postsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card.post {
+    padding: 20px;
+    background: var(--bg-section); /* Fondo blanco */
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.post-tags .tag-pill {
+    padding: 4px 10px;
+    background: #e5e7eb;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid #d1d5db;
+}
+
+.post-media {
+    overflow: hidden;
+    border-radius: 10px;
+}
+.post-media img {
+    width: 100%;
+    height: auto;
+    max-height: 450px;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+}
+
+/* Asegurar colores de texto en el post claro */
+.user-name {
+    color: var(--brand);
+}
+.post-title {
+    color: var(--text);
+}
+.post-text {
+    color: var(--text);
+}
+
+
+
+/***** === Sidebar (Tags de Sugerencia) - Estilo Oscuro ===*****/
+#idTagsContainer {
+    padding: 25px;
+    margin-bottom: 20px;
+    /* Aplicar el estilo de tarjeta oscura */
+    background: var(--bg-section);
+    color: black;
+    box-shadow: 0 8px 16px rgba(0,0,0,.3);
+}
+
+#idHeaderTags {
+    margin: 0 0 15px 0;
+    font-size: 20px;
+    font-weight: 800;
+    color: black;
+    border-bottom: 2px solid #1a416b; /* Borde oscuro */
+    padding-bottom: 10px;
+}
+/* Estilo para las etiquetas de sugerencia en el sidebar oscuro */
+#idTagsContainer .tag-pill {
+    display: inline-flex;
+    padding: 8px 14px;
+    margin-right: 8px; 
+    margin-bottom: 8px; 
+    background: #374151;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 20px;
+    border: 1px solid #4b5563;
+    transition: background 0.2s;
+}
+#idTagsContainer .tag-pill:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+/* Botón CTA (Publicar/Compartir) en Sidebar */
+#idShareButton1 {
+    background: var(--brand);
+    color: #fff;
+    border: 0;
+    border-radius: 12px;
+    padding: 15px 20px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 18px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(16, 44, 84, 0.3);
+    transition: background 0.2s, transform 0.1s;
+}
+#idShareButton1:hover {
+    background: #0d2341;
+    transform: translateY(-1px);
+}
+
+
+/***** === Paginación y Botones Generales (IGUAL A MIPERFIL) ===*****/
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px; 
+    margin: 30px 0;
+    padding: 10px 0;
+}
+
+/* Estilo base para los botones de paginación */
+.pagination-container .btn {
+    all: unset;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-weight: 700;
+    text-align: center;
+    transition: all 0.2s;
+    font-size: 14px;
+    border: 1px solid transparent; /* Para mantener el tamaño consistente */
+}
+
+/* Página Activa (Igual a miperfil: Azul var(--accent)) */
+.pagination-container .btn-primary {
+    background: var(--accent); 
+    color: #fff;
+    cursor: default;
+    border: 1px solid var(--accent);
+}
+
+/* Páginas Inactivas y Siguiente/Anterior (Igual a miperfil: Gris Claro) */
+.pagination-container .btn-secondary {
+    background: #e5e7eb; /* Gris claro */
+    color: var(--text);   /* Texto oscuro */
+    text-decoration: none;
+    border: 1px solid #d1d5db; /* Borde sutil */
+}
+
+.pagination-container .btn-secondary:hover {
+    background: #d1d5db; /* Gris un poco más oscuro al hover */
+}
+
+/* --- Estilos Generales para otros botones del sitio --- */
+.btn {
+    all: unset;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 700;
+    text-align: center;
+    transition: all 0.2s;
+}
+/* Estos se usan para el botón Publicar, etc. */
+.btn-primary {
+    background: var(--success);
+    color: #fff;
+}
+.btn-primary:hover {
+    background: #0c9e70;
+}
